@@ -86,13 +86,26 @@ travel-guide-generator/
 ├── AGENTS.md               # Codex 入口
 ├── .cursorrules            # Cursor 入口
 ├── README.md               # 本说明文件
+├── tools/
+│   ├── convert-pdf.py      # md转PDF工具（pandoc+浏览器无头模式）
+│   └── guide.css           # PDF打印样式
 └── references/
     ├── guide-structure.md  # 攻略标准结构与图片占位符规范
     ├── search-strategy.md  # 联网搜索策略（小红书优先）
     └── listing-copy.md     # 闲鱼上架文案结构（售卖模式用）
 ```
 
-核心指令在 `AGENT_GUIDE.md`，各 agent 入口文件（SKILL.md / CLAUDE.md / AGENTS.md / .cursorrules）都指向它，参考资料在 `references/`。
+核心指令在 `AGENT_GUIDE.md`，各 agent 入口文件（SKILL.md / CLAUDE.md / AGENTS.md / .cursorrules）都指向它，参考资料在 `references/`，成品制作工具在 `tools/`。
+
+## 售卖成品制作流程
+
+技能生成 md（含图片占位符）后，制作可售卖 PDF 分三步（由用户控制节奏）：
+
+1. **看 md 内容**：审阅攻略正文是否准确完整
+2. **插实拍图**：把 md 中占位符 `![在此插入：XX实拍图](图片路径)` 替换为真实图片路径
+3. **转 PDF**：内容和图片都定稿后，运行 `python tools/convert-pdf.py 目的地名`
+
+> PDF 必须在图片插好后才转，否则是空占位符。详见 `AGENT_GUIDE.md`。
 
 ## 注意事项
 
