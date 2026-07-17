@@ -1,33 +1,46 @@
 # Travel Guide Generator / 旅游攻略生成器
 
-一个 [WorkBuddy](https://www.codebuddy.cn) 技能（Skill），输入目的地即可自动联网搜索并生成结构完整、内容详实的旅游攻略。
+一个**跨平台通用**的 AI agent 指令包，输入目的地即可自动联网搜索并生成结构完整、内容详实的旅游攻略。支持 WorkBuddy、Claude Code、Codex、Cursor、Trae 等主流 AI agent。
 
 ## 功能特点
 
+- **跨平台通用**：一套指令，各 AI agent 都能用
 - **联网搜索**：自动搜索目的地的景点、交通、住宿、美食、避坑等实时信息
 - **小红书优先**：推荐内容优先参考小红书热门推荐中口碑一致的内容
 - **图片占位符**：攻略中预留图片占位符，填入自己的实拍图即可
 - **行程定制**：支持设置出发地、到达/离开时间与交通方式，据此定制行程和大交通
 - **可选售卖模式**：用于闲鱼等平台售卖时，可额外生成上架文案和差异化补充清单
 
-## 安装
+## 安装与使用（各 agent）
 
-将本仓库下载或克隆后，把 `travel-guide-generator` 文件夹放到 WorkBuddy 的技能目录：
-
+### WorkBuddy
+将 `travel-guide-generator` 文件夹放到技能目录：
 - 用户级（所有项目可用）：`~/.workbuddy/skills/travel-guide-generator/`
 - 项目级（仅当前项目）：`<项目>/.workbuddy/skills/travel-guide-generator/`
 
-## 使用
+对话中直接说"帮我生成威海3天旅游攻略"即可自动触发（由 SKILL.md 识别）。
 
-安装后，在 WorkBuddy 对话中直接说：
+### Claude Code
+将本仓库克隆到项目目录，`CLAUDE.md` 会被自动读取。在对话中说"帮我生成威海3天旅游攻略"。
+
+### Codex
+将本仓库放入项目，`AGENTS.md` 会被自动读取。
+
+### Cursor
+将 `.cursorrules` 放到项目根目录（或本仓库根目录），规则自动生效。
+
+### Trae / 其他 agent
+让 agent 读取 `AGENT_GUIDE.md` 文件并按其执行即可。
+
+### 使用示例
 
 > 帮我生成威海3天旅游攻略
 
-技能会自动触发。也可补充出行参数：
+也可补充出行参数：
 
 > 帮我生成威海3天旅游攻略，从北京出发，周五下午2点高铁到威海站，周日下午离开，用于闲鱼售卖
 
-### 参数
+## 参数
 
 | 参数 | 必需 | 默认值 | 说明 |
 |------|------|--------|------|
@@ -42,7 +55,7 @@
 | 主题偏好 | 否 | 综合 | 美食/摄影/文化/休闲/户外 |
 | 用途 | 否 | 自用 | 自用 / 售卖（售卖时额外生成上架文案和补充清单） |
 
-### 输出文件
+## 输出文件
 
 **默认输出**：
 - `{目的地}-旅游攻略.md` — 攻略正文，含图片占位符
@@ -63,17 +76,23 @@
 8. 预算明细
 9. 实用贴士
 
-## 技能结构
+## 文件结构
 
 ```
 travel-guide-generator/
-├── SKILL.md                          # 技能主文件
-├── README.md                         # 本说明文件
+├── AGENT_GUIDE.md          # 通用核心指令（任何 AI agent 可读可执行）
+├── SKILL.md                # WorkBuddy 入口（含 frontmatter，指向 AGENT_GUIDE.md）
+├── CLAUDE.md               # Claude Code 入口
+├── AGENTS.md               # Codex 入口
+├── .cursorrules            # Cursor 入口
+├── README.md               # 本说明文件
 └── references/
-    ├── guide-structure.md            # 攻略标准结构与图片占位符规范
-    ├── search-strategy.md            # 联网搜索策略（小红书优先）
-    └── listing-copy.md               # 闲鱼上架文案结构（售卖模式用）
+    ├── guide-structure.md  # 攻略标准结构与图片占位符规范
+    ├── search-strategy.md  # 联网搜索策略（小红书优先）
+    └── listing-copy.md     # 闲鱼上架文案结构（售卖模式用）
 ```
+
+核心指令在 `AGENT_GUIDE.md`，各 agent 入口文件（SKILL.md / CLAUDE.md / AGENTS.md / .cursorrules）都指向它，参考资料在 `references/`。
 
 ## 注意事项
 
